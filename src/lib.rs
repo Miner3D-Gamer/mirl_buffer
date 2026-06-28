@@ -53,3 +53,76 @@ pub const fn draw_pixel_safe(
 
 /// Commonly used components
 pub mod prelude;
+
+// TODO: Use the code below
+// /// Create a buffer from a bitmask sequence
+// ///
+// /// # Errors
+// /// When the given dimensions don't match
+// pub fn buffer_from_bitmask(
+//     mask: &[bool],
+//     size: (usize, usize),
+//     color_0: u32,
+//     color_1: u32,
+// ) -> Result<Buffer, String> {
+//     let mut new = Vec::with_capacity(mask.len());
+//     for i in mask {
+//         if *i {
+//             new.push(color_1);
+//         } else {
+//             new.push(color_0);
+//         }
+//     }
+//     Buffer::new(size, new)
+// }
+
+// /// A thread safe double buffer
+// #[derive(Debug)]
+// #[cfg(feature = "std")]
+// #[cfg_attr(feature = "c_compatible", repr(C))]
+// pub struct DoubleBuffer {
+//     front: Buffer,
+//     back: Buffer,
+//     front_is_back: std::sync::atomic::AtomicBool, // true if front buffer is the "back" buffer
+// }
+
+// #[cfg(feature = "std")]
+// impl DoubleBuffer {
+//     /// Creates a new instance of the double buffer starting out empty
+//     #[must_use]
+//     pub fn new(width: usize, height: usize) -> Self {
+//         Self {
+//             front: Buffer::new_empty((width, height)),
+//             back: Buffer::new_empty((width, height)),
+//             front_is_back: std::sync::atomic::AtomicBool::new(false),
+//         }
+//     }
+
+//     /// Renderer reads from the front buffer
+//     pub fn read(&self) -> &Buffer {
+//         if self
+//             .front_is_back
+//             .load(std::sync::atomic::Ordering::Acquire)
+//         {
+//             &self.back
+//         } else {
+//             &self.front
+//         }
+//     }
+
+//     /// Sim writes to the back buffer, then swaps
+//     pub fn write(&mut self, new_data: Buffer) {
+//         if self
+//             .front_is_back
+//             .load(std::sync::atomic::Ordering::Acquire)
+//         {
+//             self.front = new_data;
+//             self.front_is_back
+//                 .store(false, std::sync::atomic::Ordering::Release);
+//         } else {
+//             self.back = new_data;
+//             self.front_is_back
+//                 .store(true, std::sync::atomic::Ordering::Release);
+//         }
+//     }
+// }

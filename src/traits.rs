@@ -50,7 +50,7 @@ pub const trait BufferMetricsHelper {
     /// Get the current size of the buffer in a tuple
     fn get_size(&self) -> (usize, usize);
 }
-impl<T: [const] BufferMetrics> const BufferMetricsHelper for T {
+const impl<T: [const] BufferMetrics> BufferMetricsHelper for T {
     default fn get_size(&self) -> (usize, usize) {
         (self.width(), self.height())
     }
