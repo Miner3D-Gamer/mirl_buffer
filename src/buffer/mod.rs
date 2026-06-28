@@ -8,16 +8,16 @@ use crate::traits::{
 // Rewrite to use copyable list instead of Vec<[u32]>?
 /// A raw color buffer to be modified and read quickly
 #[derive(PartialEq, Debug, Eq, Clone, Hash, PartialOrd, Ord)]
-#[cfg_attr(feature = "mirl_derive", mirl_derive::derive_all(serde = false))]
+#[cfg_attr(feature = "mirl_derive", mirl_derive::derive_all(read_only=true, zerocopy = false))]
 pub struct Buffer {
-    /// Actual color data
-    pub data: Vec<u32>,
     // /// Pointer to the color data
     // pub pointer: *mut u32,
     /// Width of the buffer
     pub width: usize,
     /// Height of the buffer
     pub height: usize,
+    /// Actual color data
+    pub data: Vec<u32>,
     /// The total size -> width*height
     pub total_size: usize,
 }
